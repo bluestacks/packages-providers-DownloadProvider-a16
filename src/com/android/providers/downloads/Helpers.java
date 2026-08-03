@@ -185,6 +185,10 @@ public class Helpers {
         final long latency = info.getMinimumLatency();
         if (latency > 0) {
             builder.setMinimumLatency(latency);
+        } else {
+            // Host-requested retries need to run promptly. This also preserves the A13 behavior
+            // for newly queued downloads that have no backoff latency.
+            builder.setOverrideDeadline(1_000);
         }
 
         // We always require a network, but the type of network might be further

@@ -57,6 +57,10 @@ public class Constants {
     /** the intent that gets sent when deleting the notification of a completed download */
     public static final String ACTION_HIDE = "android.intent.action.DOWNLOAD_HIDE";
 
+    /** The intent sent by the host when pending downloads should be retried immediately. */
+    public static final String ACTION_RETRY_DOWNLOADS =
+            "android.provider.downloads.action.RETRY_DOWNLOADS";
+
     /** The default base name for downloaded files if we can't get one at the HTTP level */
     public static final String DEFAULT_DL_FILENAME = "downloadfile";
 

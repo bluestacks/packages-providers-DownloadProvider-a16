@@ -128,5 +128,13 @@
                 <data android:scheme="file" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".RetryDownloadReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.downloads.action.RETRY_DOWNLOADS" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
