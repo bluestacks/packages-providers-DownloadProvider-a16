@@ -261,6 +261,8 @@ public final class DownloadProvider extends ContentProvider {
     private StorageManager mStorageManager;
     private AppOpsManager mAppOpsManager;
 
+	private static String BST_SHARED_FOLDER_PATH = "/mnt/windows/BstSharedFolder";
+	private static String BST_SHARED_FOLDER_PATH_MAC = "/mnt/macos/BstSharedFolder";
     /**
      * Creates and updated database on demand when opening it.
      * Helper class to create database the first time the provider is
@@ -1516,7 +1518,8 @@ public final class DownloadProvider extends ContentProvider {
                             if (Downloads.Impl.isStatusCompleted(info.mStatus)) {
                                 // Set size to 0 to ensure MediaScanner will scan this file.
                                 mediaValues.put(MediaStore.Downloads.SIZE, 0);
-                                updateMediaProvider(client, mediaValues);
+								if (!(info.mFileName.startsWith(BST_SHARED_FOLDER_PATH) || info.mFileName.startsWith(BST_SHARED_FOLDER_PATH_MAC)))
+                                	updateMediaProvider(client, mediaValues);
                                 mediaStoreUri = triggerMediaScan(client, new File(info.mFileName));
                             } else {
                                 // Don't insert/update MediaStore db until the download is complete.
