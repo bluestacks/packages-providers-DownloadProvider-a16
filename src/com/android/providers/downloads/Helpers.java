@@ -105,6 +105,9 @@ public class Helpers {
     private static SystemFacade sSystemFacade;
     private static DownloadNotifier sNotifier;
 
+	private static String BST_SHARED_FOLDER_PATH = "/mnt/windows/BstSharedFolder";
+	private static String BST_SHARED_FOLDER_PATH_MAC = "/mnt/macos/BstSharedFolder";
+
     private Helpers() {
     }
 
@@ -558,7 +561,9 @@ public class Helpers {
         try {
             if (containsCanonical(buildExternalStorageAppDataDirs(packageName), file) ||
                     containsCanonical(buildExternalStorageAppObbDirs(packageName), file) ||
-                    containsCanonical(buildExternalStorageAppMediaDirs(packageName), file)) {
+                    containsCanonical(buildExternalStorageAppMediaDirs(packageName), file) ||
+					containsCanonical(new File(BST_SHARED_FOLDER_PATH), file) ||
+					containsCanonical(new File(BST_SHARED_FOLDER_PATH_MAC), file)) {
                 return true;
             }
         } catch (IOException e) {
@@ -682,7 +687,9 @@ public class Helpers {
             if (allowInternal) {
                 if (containsCanonical(context.getFilesDir(), file)
                         || containsCanonical(context.getCacheDir(), file)
-                        || containsCanonical(Environment.getDownloadCacheDirectory(), file)) {
+                        || containsCanonical(Environment.getDownloadCacheDirectory(), file)
+						|| containsCanonical(new File(BST_SHARED_FOLDER_PATH), file)
+						|| containsCanonical(new File(BST_SHARED_FOLDER_PATH_MAC), file)) {
                     return true;
                 }
             }
@@ -690,7 +697,7 @@ public class Helpers {
             final StorageVolume[] volumes = StorageManager.getVolumeList(UserHandle.myUserId(),
                     StorageManager.FLAG_FOR_WRITE);
             for (StorageVolume volume : volumes) {
-                if (containsCanonical(volume.getPathFile(), file)) {
+                if (containsCanonical(volume.getPathFile(), file) || containsCanonical(new File(BST_SHARED_FOLDER_PATH), file) || containsCanonical(new File(BST_SHARED_FOLDER_PATH_MAC), file)) {
                     return true;
                 }
             }
